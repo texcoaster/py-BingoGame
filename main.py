@@ -1,6 +1,7 @@
 import pygame
 import sys
 
+from gameobject import *
 from player import *
 
 
@@ -14,6 +15,9 @@ def main():
   pygame.display.set_caption("4 Bingo!")
   screen = pygame.display.set_mode((670, 925))
   clock = pygame.time.Clock()
+
+  root = GameObject()
+  root.children.append(Player(75, 75, (255, 255, 255), 5))
 
   while True:
     tmr = tmr + 1
@@ -41,17 +45,19 @@ def main():
       DrawText(screen, 390, 212.5, "- >", 35, (255, 255, 255))
       DrawText(screen, 500, 212.5, "ENTER!", 50, (255, 255, 255))
 
+      root.draw(screen)
+
 
     pygame.display.update()
     clock.tick(30)
 
 
-def DrawRect(screen, x, y, row, column, width, height, thickness):
+def DrawRect(screen, x, y, row, column, width, height, thick):
   for i in range(row):
     for j in range(column):
-      rx = (i*width - thickness*i + x) - ((width*row - thickness*(row - 1)) / 2)
-      ry = (j*height - thickness*j + y) - ((height*column - thickness*(column - 1)) / 2)
-      pygame.draw.rect(screen, (255, 255, 255), [rx, ry, width, height], thickness)
+      rx = (i*width - thick*i + x) - ((width*row - thick*(row - 1)) / 2)
+      ry = (j*height - thick*j + y) - ((height*column - thick*(column - 1)) / 2)
+      pygame.draw.rect(screen, (255, 255, 255), [rx, ry, width, height], thick)
 
 def DrawText(screen, x, y, text, size, color):
   fnt = pygame.font.Font(None, size)
