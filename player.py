@@ -1,14 +1,12 @@
 import pygame
-from gameobject import *
 
-class Player(GameObject):
-  def __init__(self, width, height, color, thick):
-    super().__init__()
-    self.width = width
-    self.height = height
+class Player():
+  def __init__(self, x, y, radius, color, thick):
+    self.x = x
+    self.y = y
+    self.radius = radius
     self.color = color
     self.thick = thick
   
   def draw(self, screen):
-    print("player")
-    pass
+    pygame.draw.circle(screen, self.color, [self.x, self.y], self.radius, self.thick)
