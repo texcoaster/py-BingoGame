@@ -50,6 +50,7 @@ def main():
 
     if index == 1:
       root.draw(screen)
+      root.key_input(key)
     
     if index == 2:
       press = False
