@@ -21,7 +21,7 @@ def main():
   screen = pygame.display.set_mode((670, 925))
   clock = pygame.time.Clock()
 
-  root = GameObject()
+  root = GameObject(0, 0)
   GameObject.root = root
   root.children.append(PlayerDirector())
 
@@ -47,6 +47,7 @@ def main():
         press = True
       if key[pygame.K_SPACE] == False and press == True:
         index = 1
+        PlayerDirector.pl_flag = True
 
     if index == 1:
       root.draw(screen)
