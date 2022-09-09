@@ -1,20 +1,18 @@
 import pygame
 import sys
+import time
 
 from gameobject import *
 from background import *
-from playerdirector import *
 from player1 import *
-
+from player2 import *
+from gamedirector import *
 
 
 tmr = 0
-index = 0
-
-press = False
 
 def main():
-  global tmr, index, press
+  global tmr
 
   pygame.init()
   pygame.display.set_caption("4 Bingo!")
@@ -23,9 +21,16 @@ def main():
 
   root = GameObject(0, 0)
   GameObject.root = root
+
   background = BackGround()
+  player1 = Player1(50, 305, 35, (255, 255, 255), 5)
+  player2 = Player2(50, 305, 35, (255, 255, 255), 5)
+  gamedirector = GameDirector(background, player1, player2)
+
   root.children.append(background)
-  root.children.append(PlayerDirector())
+  root.children.append(player1)
+  root.children.append(player2)
+  root.children.append(gamedirector)
 
   while True:
     tmr = tmr + 1
@@ -41,24 +46,9 @@ def main():
 
     key = pygame.key.get_pressed()
 
-    root.draw(screen)
     root.key_input(key)
+    root.draw(screen)
 
-    background.SetIndex(index)
-
-    if index == 0:
-      if key[pygame.K_SPACE] == True:
-        press = True
-      if key[pygame.K_SPACE] == False and press == True:
-        index = 1
-        press = False
-        PlayerDirector.pl_flag = True
-
-    if index == 1:
-      ...
-    
-    if index == 2:
-      ...
 
     pygame.display.update()
     clock.tick(30)

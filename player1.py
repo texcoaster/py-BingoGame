@@ -2,18 +2,19 @@ import pygame
 from gameobject import *
 
 class Player1(GameObject):
-  def __init__(self, x, y, radius, color, thick, mode):
-    super().__init__(x, y)
+  def __init__(self, x, y, radius, color, thick):
+    super().__init__(x, y, "Player1")
     self.radius = radius
-    self.speed = 100
+    self.speed = 95
 
     self.color = color
     self.thick = thick
-    self.mode = mode
+    self.mode = 0
 
     self.press = False
+    self.visible = False
     self.tmr = 0
-    self.pl_x = [47.85, 143.55, 239.25, 334.95, 430.65, 526.35, 622.05]
+    self.pl_x = [50, 145, 240, 335, 430, 525, 620]
   
   def key_input(self, key):
     if self.mode == 0:
@@ -42,9 +43,11 @@ class Player1(GameObject):
 
     if self.mode == 1:
       self.tmr = self.tmr + 1
-      print(self.tmr % 30)
 
-      if self.tmr % 180 == 0:
+      if self.tmr % 15 == 0:
         self.y = self.y + self.speed
-        if self.y > 910:
+        if self.y > 600:
           self.mode = 2
+  
+  def SetVisible(self, visible):
+    self.visible = visible
