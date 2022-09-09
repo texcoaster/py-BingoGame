@@ -3,12 +3,14 @@ from gameobject import *
 
 class BackGround(GameObject):
   def __init__(self):
+    super().__init__(0, 0)
     self.tmr = 0
+    self.index = 0
   
-  def draw(self, screen, index):
+  def draw(self, screen):
     screen.fill((0, 0, 0))
 
-    if index == 0:
+    if self.index == 0:
       self.tmr += 1
 
       self.DrawRect(screen, 335, 637.5, 7, 6, 100, 100, 5)
@@ -16,7 +18,7 @@ class BackGround(GameObject):
       if self.tmr % 30 > 15:
         self.DrawText(screen, 335, 250, "press space to start", 50, (255, 255, 255))
 
-    if index == 1:
+    if self.index == 1:
       self.DrawRect(screen, 335, 637.5, 7, 6, 100, 100, 5)
       self.DrawText(screen, 335, 100, "4 Bingo!", 150, (255, 255, 255))
 
@@ -25,8 +27,11 @@ class BackGround(GameObject):
       self.DrawText(screen, 390, 212.5, "- >", 35, (255, 255, 255))
       self.DrawText(screen, 500, 212.5, "ENTER!", 50, (255, 255, 255))
     
-    if index == 2:
+    if self.index == 2:
       self.tmr = 0
+    
+  def SetIndex(self, index):
+    self.index = index
   
   def DrawRect(self, screen, x, y, row, column, width, height, thick):
     for i in range(row):

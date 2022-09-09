@@ -4,7 +4,7 @@ import sys
 from gameobject import *
 from background import *
 from playerdirector import *
-from player import *
+from player1 import *
 
 
 
@@ -23,9 +23,9 @@ def main():
 
   root = GameObject(0, 0)
   GameObject.root = root
-  root.children.append(PlayerDirector())
-
   background = BackGround()
+  root.children.append(background)
+  root.children.append(PlayerDirector())
 
   while True:
     tmr = tmr + 1
@@ -40,22 +40,25 @@ def main():
           screen = pygame.display.set_mode((670, 925))
 
     key = pygame.key.get_pressed()
-    background.draw(screen, index)
+
+    root.draw(screen)
+    root.key_input(key)
+
+    background.SetIndex(index)
 
     if index == 0:
       if key[pygame.K_SPACE] == True:
         press = True
       if key[pygame.K_SPACE] == False and press == True:
         index = 1
+        press = False
         PlayerDirector.pl_flag = True
 
     if index == 1:
-      root.draw(screen)
-      root.key_input(key)
+      ...
     
     if index == 2:
-      press = False
-
+      ...
 
     pygame.display.update()
     clock.tick(30)

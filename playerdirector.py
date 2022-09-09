@@ -1,4 +1,4 @@
-from player import *
+from player1 import *
 from gameobject import *
 
 class PlayerDirector(GameObject):
@@ -9,7 +9,7 @@ class PlayerDirector(GameObject):
 
   def draw(self, screen):
     if PlayerDirector.pl_flag:
-      self.children.append(Player(47.85, 300, 35, (255, 255, 255), 5, self.pl_type))
+      self.children.append(Player1(47.85, 300, 35, (255, 255, 255), 5, self.pl_type))
       PlayerDirector.pl_flag = False
       self.pl_type = (self.pl_type + 1) % 2
 
