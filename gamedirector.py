@@ -9,7 +9,7 @@ class GameDirector(GameObject):
     self.player1 = player1
     self.player2 = player2
 
-    # 0:StartScene / 1:Player1 / 2:Player2 / 3:Player1 Down / 4:Player2 Down / 5:EndScene
+    # 0:StartScene / 1:Player1 / 2:Player2 / 3:Player1 Down / 4:Player2 Down / 5:EndScene(RedWin) / 6:EndScene(BlueWin) / 7:EndScene(Draw)
     self.mode = 0
     self.press = False
     self.tmr = 0
@@ -51,6 +51,10 @@ class GameDirector(GameObject):
           self.changeToMode1()
         else:
           self.mode = 2
+    
+    if self.mode == 5 or self.mode == 6:
+      self.player1.setVisible(False)
+      self.player2.setVisible(False)
 
   
   def onEndPlayerTurn(self, playerNum):
