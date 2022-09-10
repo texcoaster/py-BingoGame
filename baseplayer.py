@@ -14,6 +14,9 @@ class BasePlayer(GameObject):
 
     self.possibilityKeyPress = False
     self.enter_key_down = False
+    self.leftKeyDown = False
+    self.rightKeyDown = False
+
     self.visible = False
     self.gamedirector = None
 
