@@ -1,6 +1,5 @@
 import pygame
 import sys
-import time
 
 from gameobject import *
 from background import *
@@ -19,18 +18,23 @@ def main():
   screen = pygame.display.set_mode((670, 925))
   clock = pygame.time.Clock()
 
+
   root = GameObject(0, 0)
   GameObject.root = root
 
   background = BackGround()
-  player1 = Player1(50, 305, 35, (255, 255, 255), 5)
-  player2 = Player2(50, 305, 35, (255, 255, 255), 5)
+  player1 = Player1()
+  player2 = Player2()
   gamedirector = GameDirector(background, player1, player2)
+
+  player1.setGameDirector(gamedirector)
+  player2.setGameDirector(gamedirector)
 
   root.children.append(background)
   root.children.append(player1)
   root.children.append(player2)
   root.children.append(gamedirector)
+
 
   while True:
     tmr = tmr + 1

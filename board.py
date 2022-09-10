@@ -7,13 +7,12 @@ class Board(GameObject):
     super().__init__(335, 637.5, "Board")
     # 0:empty  1:player1  2:player2
     self.boardData = [
-      [0, 0, 0, 0, 0, 0],
-      [0, 0, 0, 0, 0, 0],
-      [0, 0, 0, 0, 0, 0],
-      [0, 0, 0, 0, 0, 0],
-      [0, 0, 0, 0, 0, 0],
-      [0, 0, 0, 0, 0, 0],
-      [0, 0, 0, 0, 0, 0]
+      [0, 0, 0, 0, 0, 0, 0],
+      [0, 0, 0, 0, 0, 0, 0],
+      [0, 0, 0, 0, 0, 0, 0],
+      [0, 0, 0, 0, 0, 0, 0],
+      [0, 0, 0, 0, 0, 0, 0],
+      [0, 0, 0, 0, 0, 0, 0]
     ]
   
   def draw(self, screen):
@@ -26,8 +25,10 @@ class Board(GameObject):
 
     for i in range(row):
       for j in range(column):
-        rx = (i*width - thick*i + self.x) - ((width*row - thick*(row - 1)) / 2)
-        ry = (j*height - thick*j + self.y) - ((height*column - thick*(column - 1)) / 2)
+        # rx = (i*width - thick*i + self.x) - ((width*row - thick*(row - 1)) / 2)
+        # ry = (j*height - thick*j + self.y) - ((height*column - thick*(column - 1)) / 2)
+        rx = (j*width - thick*j + self.x) - ((width*column - thick*(column-1)) / 2)
+        ry = (i*height - thick*i + self.y) - ((height*row - thick*(row-1)) / 2)
         pygame.draw.rect(screen, (255, 255, 255), [rx, ry, width, height], thick)
 
         if self.boardData[i][j] == 1:
@@ -35,5 +36,5 @@ class Board(GameObject):
         elif self.boardData[i][j] == 2:
           pygame.draw.circle(screen, (0, 255, 0), [rx+50, ry+50], 35, 5)
 
-  def SetPosition(self, row, column, type):
-    self.boardData[row][column] = type
+  def setPosition(self, row, column, playerNum):
+    self.boardData[row][column] = playerNum
