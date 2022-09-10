@@ -29,18 +29,31 @@ class BackGround(GameObject):
       self.drawText(screen, 500, 212.5, "ENTER!", 50, (255, 255, 255))
     
     if self.mode == 5:
+      self.tmr += 1
+
       self.drawText(screen, 335, 100, "4 Bingo!", 150, (255, 255, 255))
-      self.drawText(screen, 335, 250, "Player1(Red) Win!", 100, (150, 150, 255))
-      self.tmr = 0
+      self.drawText(screen, 335, 225, "Player1(Red) Win!", 100, (150, 150, 255))
+
+      if self.tmr % 30 > 15:
+        self.drawText(screen, 335, 300, "press space to restart", 50, (255, 255, 255))
     
     if self.mode == 6:
+      self.tmr += 1
+      
       self.drawText(screen, 335, 100, "4 Bingo!", 150, (255, 255, 255))
-      self.drawText(screen, 335, 250, "Player2(Grn) Win!", 100, (150, 150, 255))
-      self.tmr = 0
+      self.drawText(screen, 335, 225, "Player2(Grn) Win!", 100, (150, 150, 255))
+
+      if self.tmr % 30 > 15:
+        self.drawText(screen, 335, 300, "press space to restart", 50, (255, 255, 255))
     
     if self.mode == 7:
+      self.tmr += 1
+
       self.drawText(screen, 335, 100, "4 Bingo!", 150, (255, 255, 255))
-      self.drawText(screen, 335, 250, "Draw!", 150, (150, 150, 255))
+      self.drawText(screen, 335, 255, "Draw!", 150, (150, 150, 255))
+
+      if self.tmr % 30 > 15:
+        self.drawText(screen, 335, 300, "press space to restart", 50, (255, 255, 255))
     
     super().draw(screen)
 

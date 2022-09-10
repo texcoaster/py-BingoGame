@@ -12,6 +12,7 @@ class BasePlayer(GameObject):
     self.color = color
     self.thick = thick
 
+    self.possibilityKeyPress = False
     self.enter_key_down = False
     self.visible = False
     self.gamedirector = None

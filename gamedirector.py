@@ -11,22 +11,28 @@ class GameDirector(GameObject):
 
     # 0:StartScene / 1:Player1 / 2:Player2 / 3:Player1 Down / 4:Player2 Down / 5:EndScene(RedWin) / 6:EndScene(BlueWin) / 7:EndScene(Draw)
     self.mode = 0
+    # 1:Player1 / 2:Player2
+    self.turn = 1
     self.press = False
     self.tmr = 0
 
   def key_input(self, key):
-    if self.mode == 0:
+    if self.mode == 0 or (self.mode >= 5 and self.mode <= 7):
       if key[pygame.K_SPACE] == True:
         self.press = True
       if key[pygame.K_SPACE] == False and self.press == True:
         self.press = False
-        self.mode = 1
-        self.player1.setVisible(True)
+        self.reset()
 
   def draw(self, screen):
     self.background.setMode(self.mode)
 
     self.tmr = self.tmr + 1
+
+    if self.mode == 1:
+      self.player1.possibilityKeyPress = True
+    if self.mode == 2:
+      self.player2.possibilityKeyPress = True
 
     if self.mode == 3 and self.tmr % 2 == 0:
       board_x = self.player1.getColumnInBoard()
@@ -70,8 +76,10 @@ class GameDirector(GameObject):
   def onEndPlayerTurn(self, playerNum):
     if playerNum == 1:
       self.mode = 3
+      self.player1.possibilityKeyPress = False
     if playerNum == 2:
       self.mode = 4
+      self.player2.possibilityKeyPress = False
 
   def changeToMode1(self):
     self.mode = 1
@@ -176,3 +184,26 @@ class GameDirector(GameObject):
       return True
     else:
       return False
+  
+  def reset(self):
+    self.tmr = 0
+    self.turn = (self.turn + 1) % 2
+    self.mode = self.turn + 1
+
+    if self.mode == 1:
+      self.player1.setVisible(True)
+      self.player2.setVisible(False)
+    if self.mode == 2:
+      self.player2.setVisible(True)
+      self.player1.setVisible(False)
+
+    self.player1.reset()
+    self.player2.reset()
+    self.board.boardData = [
+      [0, 0, 0, 0, 0, 0, 0],
+      [0, 0, 0, 0, 0, 0, 0],
+      [0, 0, 0, 0, 0, 0, 0],
+      [0, 0, 0, 0, 0, 0, 0],
+      [0, 0, 0, 0, 0, 0, 0],
+      [0, 0, 0, 0, 0, 0, 0]
+    ]

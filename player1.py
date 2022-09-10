@@ -6,7 +6,7 @@ class Player1(BasePlayer):
     super().__init__("Player1", 50, 305, 35, (255, 0, 0), 5)
   
   def key_input(self, key):
-    if self.visible == True:
+    if self.visible and self.possibilityKeyPress:
       if key[pygame.K_q] == True:
         self.x_slope = 0
       if key[pygame.K_w] == True:
