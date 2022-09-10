@@ -117,7 +117,7 @@ class GameDirector(GameObject):
     sum = 0
 
     for i in range(7):
-      if row-i == 0 or column-i == 0: break
+      if row-i == -1 or column-i == -1: break
       else:
         if self.board.boardData[row-i][column-i] == playerNum:
           sum = sum + 1
@@ -135,13 +135,13 @@ class GameDirector(GameObject):
     sum = 0
 
     for i in range(7):
-      if row-i == 0 or column+i == 7: break
+      if row-i == -1 or column+i == 7: break
       else:
         if self.board.boardData[row-i][column+i] == playerNum:
           sum = sum + 1
         else: break
     for i in range(1, 7):
-      if row+i == 6 or column-i == 0: break
+      if row+i == 6 or column-i == -1: break
       else:
         if self.board.boardData[row+i][column-i] == playerNum:
           sum = sum + 1
