@@ -25,8 +25,6 @@ class Board(GameObject):
 
     for i in range(row):
       for j in range(column):
-        # rx = (i*width - thick*i + self.x) - ((width*row - thick*(row - 1)) / 2)
-        # ry = (j*height - thick*j + self.y) - ((height*column - thick*(column - 1)) / 2)
         rx = (j*width - thick*j + self.x) - ((width*column - thick*(column-1)) / 2)
         ry = (i*height - thick*i + self.y) - ((height*row - thick*(row-1)) / 2)
         pygame.draw.rect(screen, (255, 255, 255), [rx, ry, width, height], thick)
@@ -35,6 +33,10 @@ class Board(GameObject):
           pygame.draw.circle(screen, (255, 0, 0), [rx+50, ry+50], 35, 5)
         elif self.boardData[i][j] == 2:
           pygame.draw.circle(screen, (0, 255, 0), [rx+50, ry+50], 35, 5)
+        elif self.boardData[i][j] == 3:
+          pygame.draw.circle(screen, (255, 0, 0), [rx+50, ry+50], 35, 35)
+        elif self.boardData[i][j] == 4:
+          pygame.draw.circle(screen, (0, 255, 0), [rx+50, ry+50], 35, 35)
 
   def setPosition(self, row, column, playerNum):
     self.boardData[row][column] = playerNum
