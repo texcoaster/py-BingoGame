@@ -48,7 +48,7 @@ class GameDirector(GameObject):
           self.board.boardData[board_y][board_x] = 1
           if self.checkBingo(1, board_y, board_x):
             self.mode = 5
-            for i in range(4):
+            for i in range(len(self.toBeFilledStone)):
               row, column = self.toBeFilledStone[i]
               self.board.boardData[row][column] = 3
 
@@ -70,7 +70,7 @@ class GameDirector(GameObject):
           self.board.boardData[board_y][board_x] = 2
           if self.checkBingo(2, board_y, board_x):
             self.mode = 6
-            for i in range(4):
+            for i in range(len(self.toBeFilledStone)):
               row, column = self.toBeFilledStone[i]
               self.board.boardData[row][column] = 4
 
@@ -193,22 +193,21 @@ class GameDirector(GameObject):
 
 
   def checkBingo(self, playerNum, row, column):
+    bingoCount = 0
+
     if self.CountStoneUpDown(playerNum, row, column) == 4:
+      bingoCount += 1
+    if self.CountStoneLeftRight(playerNum, row, column) == 4:
+      bingoCount += 1
+    if self.CountStoneDiagonal1(playerNum, row, column) == 4:
+      bingoCount += 1
+    if self.CountStoneDiagonal2(playerNum, row, column) == 4:
+      bingoCount += 1
+
+    if bingoCount > 0:
       return True
     else:
-      self.toBeFilledStone.clear()
-      if self.CountStoneLeftRight(playerNum, row, column) == 4:
-        return True
-      else:
-        self.toBeFilledStone.clear()
-        if self.CountStoneDiagonal1(playerNum, row, column) == 4:
-          return True
-        else:
-          self.toBeFilledStone.clear()
-          if self.CountStoneDiagonal2(playerNum, row, column) == 4:
-            return True
-          else:
-            return False
+      return False
 
   def checkDraw(self):
     if self.CountAllStone() == 42:
@@ -218,7 +217,13 @@ class GameDirector(GameObject):
   
 
   def SetRowColumn(self, row, column):
-    self.toBeFilledStone.append((row, column))
+    if len(self.toBeFilledStone) == 0:
+      self.toBeFilledStone.append((row, column))
+    else:
+      for i in range(len(self.toBeFilledStone)):
+        x, y = self.toBeFilledStone[i]
+        if x != row or y !=column:
+          self.toBeFilledStone.append((row, column))
 
 
   def reset(self):
