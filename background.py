@@ -1,6 +1,7 @@
 import pygame
 from gameobject import *
 from board import *
+from timer import *
 
 class BackGround(GameObject):
   def __init__(self):
@@ -9,9 +10,11 @@ class BackGround(GameObject):
     self.mode = 0
 
     self.children.append(Board())
+    self.children.append(Timer())
   
   def draw(self, screen):
     screen.fill((0, 0, 0))
+    self.children[1].setMode(self.mode)
 
     if self.mode == 0:
       self.tmr += 1
