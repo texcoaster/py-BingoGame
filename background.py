@@ -14,7 +14,6 @@ class BackGround(GameObject):
   
   def draw(self, screen):
     screen.fill((0, 0, 0))
-    self.children[1].setMode(self.mode)
 
     if self.mode == 0:
       self.tmr += 1
@@ -70,3 +69,5 @@ class BackGround(GameObject):
   
   def getBoard(self):
     return self.children[0]
+  def getTimer(self):
+    return self.children[1]

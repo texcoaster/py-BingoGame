@@ -4,34 +4,43 @@ from gameobject import *
 class Timer(GameObject):
   def __init__(self):
     super().__init__(620, 180)
-    self.second = 20
-    self.tmr = 0
-
-    self.color = (0, 0, 255)
-    self.mode = 0
+    self.reset()
   
   def draw(self, screen):
-    if self.mode == 1:
-      self.tmr += 1
+    if self.mode > 0 and self.mode < 5:
+      self.drawText(screen, self.x, self.y, str("%.1f" %self.second), 60, self.color)
 
-      self.checkSecond(self.second)
-      self.changeColor(self.tmr)
-
-      fnt = pygame.font.Font(None, 60)
-      sur = fnt.render(str(self.second), True, self.color)
-      screen.blit(sur, [self.x - sur.get_width() / 2, self.y - sur.get_height() / 2])
+      if self.mode > 0 and self.mode < 3:
+        self.tmr += 1
+        self.checkSecond()
+        self.changeColor()
+      else:
+        self.tmr = 0
+    else:
+      self.reset()
 
   def setMode(self, mode):
     self.mode = mode
-  
-  def checkSecond(self, second):
-    if self.second > 0:
-      if self.tmr % 30 == 0:
-        self.second -= 1
+
+  def reset(self):
+    self.second = 20.0
+    self.tmr = 0
+    self.color = (255, 255, 255)
+    self.mode = 0
+
+  def drawText(self, screen, x, y, text, size, color):
+    fnt = pygame.font.Font(None, size)
+    sur = fnt.render(text, True, (color))
+    screen.blit(sur, [x - sur.get_width() / 2, y - sur.get_height() / 2])
+
+  def checkSecond(self):
+    if self.second > 0.1:
+      if self.tmr % 3 == 0:
+        self.second -= 0.1
     else:
-      self.second = 20
-  
-  def changeColor(self, tmr):
+      self.second = 0.0
+
+  def changeColor(self):
     if self.second > 7:
       self.color = (255, 255, 255)
     elif self.second > 3:

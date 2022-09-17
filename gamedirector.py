@@ -6,6 +6,7 @@ class GameDirector(GameObject):
     super().__init__(0, 0)
     self.background = background
     self.board = background.getBoard()
+    self.timer = background.getTimer()
     self.player1 = player1
     self.player2 = player2
 
@@ -14,6 +15,8 @@ class GameDirector(GameObject):
     # 1:Player1 / 2:Player2
     self.turn = 1
 
+    self.haveTime = True
+    self.resetSecond = False
     self.toBeFilledStone = []
     self.press = False
     self.tmr = 0
@@ -30,6 +33,14 @@ class GameDirector(GameObject):
 
   def draw(self, screen):
     self.background.setMode(self.mode)
+    self.timer.setMode(self.mode)
+
+    if self.timer.second == 0:
+      self.haveTime = False
+      if self.mode == 1:
+        self.mode = 3
+      if self.mode == 2:
+        self.mode = 4
 
     self.tmr = self.tmr + 1
 
@@ -41,8 +52,13 @@ class GameDirector(GameObject):
     if self.mode == 3 and self.tmr % 2 == 0:
       board_x = self.player1.getColumnInBoard()
       board_y = self.player1.getRowInBoard()
-      if board_y < 5 and self.board.boardData[board_y+1][board_x] == 0:
+
+      if board_y < 5 and self.board.boardData[0][board_x] != 0 and self.haveTime == False:
+        self.mode = 6
+      elif board_y < 5 and self.board.boardData[board_y+1][board_x] == 0:
           self.player1.moveToBoardY(board_y+1)
+          if board_y == -1:
+            self.resetSecond = True
       else:
         if board_y != -1:
           self.board.boardData[board_y][board_x] = 1
@@ -59,12 +75,21 @@ class GameDirector(GameObject):
             self.toBeFilledStone.clear()
         else:
           self.mode = 1
+
+        if self.resetSecond == True:
+          self.resetSecond = False
+          self.timer.second = 20
     
     if self.mode == 4 and self.tmr % 2 == 0:
       board_x = self.player2.getColumnInBoard()
       board_y = self.player2.getRowInBoard()
-      if board_y < 5 and self.board.boardData[board_y+1][board_x] == 0:
+
+      if board_y < 5 and self.board.boardData[0][board_x] != 0 and self.haveTime == False:
+        self.mode = 5
+      elif board_y < 5 and self.board.boardData[board_y+1][board_x] == 0:
         self.player2.moveToBoardY(board_y+1)
+        if board_y == -1:
+          self.resetSecond = True
       else:
         if board_y != -1:
           self.board.boardData[board_y][board_x] = 2
@@ -81,6 +106,10 @@ class GameDirector(GameObject):
             self.toBeFilledStone.clear()
         else:
           self.mode = 2
+        
+        if self.resetSecond == True:
+          self.resetSecond = False
+          self.timer.second = 20
     
     if self.mode >= 5 and self.mode <= 7:
       self.player1.setVisible(False)
@@ -230,6 +259,8 @@ class GameDirector(GameObject):
     self.tmr = 0
     self.turn = (self.turn + 1) % 2
     self.mode = self.turn + 1
+    self.haveTime = True
+    self.resetSecond = False
 
     if self.mode == 1:
       self.player1.setVisible(True)
