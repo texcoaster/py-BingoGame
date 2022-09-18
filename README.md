@@ -6,3 +6,7 @@
 `pip install pygame`
 1. 게임 실행  
 `python main.py`
+
+스크린샷  
+<img src="GreenWin_BingoGame.png" width="400px">
+<img src="RedTurn_BingoGame.png" width="400px">
