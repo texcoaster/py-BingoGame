@@ -21,6 +21,10 @@ class GameDirector(GameObject):
     self.press = False
     self.tmr = 0
 
+    self.blop_sound = pygame.mixer.Sound("_sounds/MP_Blop.wav")
+    self.tada_sound = pygame.mixer.Sound("_sounds/MP_Ta-Da.wav")
+    self.button_sound = pygame.mixer.Sound("_sounds/MP_Tiny-Button-Push.wav")
+
 
   def key_input(self, key):
     if self.mode == 0 or (self.mode >= 5 and self.mode <= 7):
@@ -28,6 +32,7 @@ class GameDirector(GameObject):
         self.press = True
       if key[pygame.K_SPACE] == False and self.press == True:
         self.press = False
+        self.button_sound.play()
         self.reset()
 
 
@@ -55,6 +60,8 @@ class GameDirector(GameObject):
 
       if board_y < 5 and self.board.boardData[0][board_x] != 0 and self.haveTime == False:
         self.mode = 6
+        self.tada_sound.play()
+
       elif board_y < 5 and self.board.boardData[board_y+1][board_x] == 0:
           self.player1.moveToBoardY(board_y+1)
           if board_y == -1:
@@ -64,12 +71,16 @@ class GameDirector(GameObject):
           self.board.boardData[board_y][board_x] = 1
           if self.checkBingo(1, board_y, board_x):
             self.mode = 5
+            self.tada_sound.play()
+
             for i in range(len(self.toBeFilledStone)):
               row, column = self.toBeFilledStone[i]
               self.board.boardData[row][column] = 3
 
           elif self.checkDraw():
             self.mode = 7
+            self.tada_sound.play()
+
           else:
             self.changeToMode2()
             self.toBeFilledStone.clear()
@@ -86,6 +97,8 @@ class GameDirector(GameObject):
 
       if board_y < 5 and self.board.boardData[0][board_x] != 0 and self.haveTime == False:
         self.mode = 5
+        self.tada_sound.play()
+
       elif board_y < 5 and self.board.boardData[board_y+1][board_x] == 0:
         self.player2.moveToBoardY(board_y+1)
         if board_y == -1:
@@ -95,12 +108,16 @@ class GameDirector(GameObject):
           self.board.boardData[board_y][board_x] = 2
           if self.checkBingo(2, board_y, board_x):
             self.mode = 6
+            self.tada_sound.play()
+
             for i in range(len(self.toBeFilledStone)):
               row, column = self.toBeFilledStone[i]
               self.board.boardData[row][column] = 4
 
           elif self.checkDraw():
             self.mode = 7
+            self.tada_sound.play()
+            
           else:
             self.changeToMode1()
             self.toBeFilledStone.clear()
@@ -120,9 +137,12 @@ class GameDirector(GameObject):
     if playerNum == 1:
       self.mode = 3
       self.player1.possibilityKeyPress = False
+      self.blop_sound.play()
+
     if playerNum == 2:
       self.mode = 4
       self.player2.possibilityKeyPress = False
+      self.blop_sound.play()
 
 
   def changeToMode1(self):
