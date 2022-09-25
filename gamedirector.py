@@ -18,6 +18,7 @@ class GameDirector(GameObject):
     self.haveTime = True
     self.resetSecond = False
     self.toBeFilledStone = []
+    self.toBeFilledStoneCheck = []
     self.press = False
     self.tmr = 0
 
@@ -83,7 +84,7 @@ class GameDirector(GameObject):
 
           else:
             self.changeToMode2()
-            self.toBeFilledStone.clear()
+            self.toBeFilledStoneCheck.clear()
         else:
           self.mode = 1
 
@@ -120,7 +121,7 @@ class GameDirector(GameObject):
             
           else:
             self.changeToMode1()
-            self.toBeFilledStone.clear()
+            self.toBeFilledStoneCheck.clear()
         else:
           self.mode = 2
         
@@ -172,6 +173,9 @@ class GameDirector(GameObject):
         self.SetRowColumn(i, column)
       else: break
     
+    if sum == 4:
+      self.appendToBeFilledStone()
+
     return sum
 
   def CountStoneLeftRight(self, playerNum, row, column):
@@ -187,6 +191,9 @@ class GameDirector(GameObject):
         sum = sum + 1
         self.SetRowColumn(row, i)
       else: break
+
+    if sum == 4:
+      self.appendToBeFilledStone()
     
     return sum
   
@@ -207,6 +214,9 @@ class GameDirector(GameObject):
           sum = sum + 1
           self.SetRowColumn(row+i, column+i)
         else: break
+
+    if sum == 4:
+      self.appendToBeFilledStone()
     
     return sum
   
@@ -227,6 +237,9 @@ class GameDirector(GameObject):
           sum = sum + 1
           self.SetRowColumn(row+i, column-i)
         else: break
+
+    if sum == 4:
+      self.appendToBeFilledStone()
     
     return sum
   
@@ -244,14 +257,19 @@ class GameDirector(GameObject):
   def checkBingo(self, playerNum, row, column):
     bingoCount = 0
 
+    self.toBeFilledStoneCheck.clear()
     if self.CountStoneUpDown(playerNum, row, column) == 4:
       bingoCount += 1
+    self.toBeFilledStoneCheck.clear()
     if self.CountStoneLeftRight(playerNum, row, column) == 4:
       bingoCount += 1
+    self.toBeFilledStoneCheck.clear()
     if self.CountStoneDiagonal1(playerNum, row, column) == 4:
       bingoCount += 1
+    self.toBeFilledStoneCheck.clear()
     if self.CountStoneDiagonal2(playerNum, row, column) == 4:
       bingoCount += 1
+    self.toBeFilledStoneCheck.clear()
 
     if bingoCount > 0:
       return True
@@ -266,13 +284,19 @@ class GameDirector(GameObject):
   
 
   def SetRowColumn(self, row, column):
-    if len(self.toBeFilledStone) == 0:
-      self.toBeFilledStone.append((row, column))
+    if len(self.toBeFilledStoneCheck) == 0:
+      self.toBeFilledStoneCheck.append((row, column))
     else:
-      for i in range(len(self.toBeFilledStone)):
-        x, y = self.toBeFilledStone[i]
-        if x != row or y !=column:
-          self.toBeFilledStone.append((row, column))
+      # for i in range(len(self.toBeFilledStoneCheck)):
+      x, y = self.toBeFilledStoneCheck[len(self.toBeFilledStoneCheck)-1]
+      if x != row or y != column:
+        self.toBeFilledStoneCheck.append((row, column))
+  
+  def appendToBeFilledStone(self):
+    for i in range(4):
+      row, column = self.toBeFilledStoneCheck[i]
+      self.toBeFilledStone.append((row, column))
+    self.toBeFilledStoneCheck.clear()
 
 
   def reset(self):
@@ -290,6 +314,7 @@ class GameDirector(GameObject):
       self.player1.setVisible(False)
     
     self.toBeFilledStone.clear()
+    self.toBeFilledStoneCheck.clear()
 
     self.player1.reset()
     self.player2.reset()
