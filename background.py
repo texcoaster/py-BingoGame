@@ -18,12 +18,12 @@ class BackGround(GameObject):
     if self.mode == 0:
       self.tmr += 1
 
-      self.drawText(screen, 335, 100, "4 Bingo!", 150, (255, 255, 255))
+      self.drawText(screen, 335, 100, "Bingo!", 150, (255, 255, 255))
       if self.tmr % 30 > 15:
         self.drawText(screen, 335, 250, "press space to start", 50, (255, 255, 255))
 
     if self.mode > 0 and self.mode < 5:
-      self.drawText(screen, 335, 100, "4 Bingo!", 150, (255, 255, 255))
+      self.drawText(screen, 335, 100, "Bingo!", 150, (255, 255, 255))
 
       self.drawText(screen, 185, 200, "Player1 - 1:q 2:w 3:e 4:r 5:t 6:y 7:u", 30, (255, 255, 255))
       self.drawText(screen, 182.5, 225, "Player2 - 1:a 2:s 3:d 4:f 5:g 6:h 7:j", 30, (255, 255, 255))
@@ -33,7 +33,7 @@ class BackGround(GameObject):
     if self.mode == 5:
       self.tmr += 1
 
-      self.drawText(screen, 335, 100, "4 Bingo!", 150, (255, 255, 255))
+      self.drawText(screen, 335, 100, "Bingo!", 150, (255, 255, 255))
       self.drawText(screen, 335, 225, "Player1(Red) Win!", 100, (150, 150, 255))
 
       if self.tmr % 30 > 15:
@@ -42,7 +42,7 @@ class BackGround(GameObject):
     if self.mode == 6:
       self.tmr += 1
       
-      self.drawText(screen, 335, 100, "4 Bingo!", 150, (255, 255, 255))
+      self.drawText(screen, 335, 100, "Bingo!", 150, (255, 255, 255))
       self.drawText(screen, 335, 225, "Player2(Grn) Win!", 100, (150, 150, 255))
 
       if self.tmr % 30 > 15:
@@ -51,7 +51,7 @@ class BackGround(GameObject):
     if self.mode == 7:
       self.tmr += 1
 
-      self.drawText(screen, 335, 100, "4 Bingo!", 150, (255, 255, 255))
+      self.drawText(screen, 335, 100, "Bingo!", 150, (255, 255, 255))
       self.drawText(screen, 335, 255, "Draw!", 150, (150, 150, 255))
 
       if self.tmr % 30 > 15:

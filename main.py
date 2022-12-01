@@ -14,7 +14,7 @@ def main():
   global tmr
 
   pygame.init()
-  pygame.display.set_caption("4 Bingo!")
+  pygame.display.set_caption("Bingo!")
   screen = pygame.display.set_mode((670, 925))
   clock = pygame.time.Clock()
 
